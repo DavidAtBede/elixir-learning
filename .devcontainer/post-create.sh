@@ -6,6 +6,10 @@ set -x  # Print commands for debugging
 sudo apt-get update
 sudo apt-get install -y curl build-essential git wget unzip gnupg
 
+# Install software-properties-common for add-apt-repository
+echo "Installing software-properties-common..."
+sudo apt-get install -y software-properties-common
+
 # Add RabbitMQ Erlang PPA for OTP 27
 echo "Adding RabbitMQ Erlang PPA..."
 sudo add-apt-repository -y ppa:rabbitmq/rabbitmq-erlang
