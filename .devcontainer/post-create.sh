@@ -11,8 +11,8 @@ echo "Adding RabbitMQ Erlang PPA..."
 sudo add-apt-repository -y ppa:rabbitmq/rabbitmq-erlang
 sudo apt-get update
 
-# Install Erlang
-echo "Installing Erlang..."
+# Install Erlang OTP 26
+echo "Installing Erlang OTP 26..."
 sudo apt-get install -y erlang-base erlang-nox erlang-dev
 if ! command -v erl >/dev/null; then
   echo "Erlang installation failed!"
@@ -21,11 +21,11 @@ fi
 ERL_VERSION=$(erl -eval 'erlang:display(erlang:system_info(otp_release)), halt().' -noshell | tr -d '"')
 echo "Installed Erlang version: $ERL_VERSION"
 
-# Install Elixir (match OTP 26)
-echo "Installing Elixir..."
-ELIXIR_VERSION="1.16.2"
+# Install Elixir 1.18.2 (match OTP 26)
+echo "Installing Elixir 1.18.2..."
+ELIXIR_VERSION="1.18.2"
 wget -v https://github.com/elixir-lang/elixir/releases/download/v${ELIXIR_VERSION}/elixir-otp-26.zip -O /tmp/elixir.zip || {
-  echo "Failed to download Elixir for OTP 26! Check URL or network."
+  echo "Failed to download Elixir $ELIXIR_VERSION for OTP 26! Check URL or network."
   exit 1
 }
 sudo unzip -q /tmp/elixir.zip -d /usr/local/elixir || {
