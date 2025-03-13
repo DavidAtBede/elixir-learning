@@ -1,18 +1,23 @@
 #!/bin/bash
-set -e  # Exit on any error
+set -e  # Exit on error
+set -x  # Print commands for debugging
 
-# Update package list and install dependencies
+# Update package list and install basic tools
 sudo apt-get update
-sudo apt-get install -y curl build-essential git wget
+sudo apt-get install -y curl build-essential git wget unzip
 
-# Install Erlang
-wget -q https://packages.erlang-solutions.com/erlang/debian/erlang_solutions.asc -O- | sudo apt-key add -
-echo "deb https://packages.erlang-solutions.com/debian $(lsb_release -cs) contrib" | sudo tee /etc/apt/sources.list.d/erlang.list
-sudo apt-get update
-sudo apt-get install -y esl-erlang
+# Install Erlang from Ubuntu repositories
+echo "Installing Erlang from Ubuntu repos..."
+sudo apt-get install -y erlang
+# Verify Erlang
+if ! command -v erl >/dev/null; then
+  echo "Erlang installation failed!"
+  exit 1
+fi
 
-# Install Elixir manually (specific version for reliability)
-ELIXIR_VERSION="1.15.7"  # Adjust as needed
+# Install Elixir manually
+echo "Installing Elixir..."
+ELIXIR_VERSION="1.15.7"
 wget -q https://github.com/elixir-lang/elixir/releases/download/v${ELIXIR_VERSION}/elixir-otp-25.zip -O /tmp/elixir.zip
 sudo unzip -q /tmp/elixir.zip -d /usr/local/elixir
 sudo ln -sf /usr/local/elixir/bin/elixirc /usr/local/bin/elixirc
@@ -20,19 +25,33 @@ sudo ln -sf /usr/local/elixir/bin/elixir /usr/local/bin/elixir
 sudo ln -sf /usr/local/elixir/bin/iex /usr/local/bin/iex
 sudo ln -sf /usr/local/elixir/bin/mix /usr/local/bin/mix
 rm /tmp/elixir.zip
+# Verify Elixir
+if ! command -v elixir >/dev/null; then
+  echo "Elixir installation failed!"
+  exit 1
+fi
 
-# Install Node.js (LTS version, since v12 is outdated)
+# Install Node.js (LTS version)
+echo "Installing Node.js..."
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt-get install -y nodejs
+# Verify Node.js
+if ! command -v node >/dev/null; then
+  echo "Node.js installation failed!"
+  exit 1
+fi
 
 # Install Hex and Rebar
+echo "Installing Hex and Rebar..."
 mix local.hex --force
 mix local.rebar --force
 
 # Install Livebook
+echo "Installing Livebook..."
 mix archive.install hex livebook --force
 
-# Verify installations
+# Final verification
+echo "Verification:"
 echo "Erlang version:"
 erl -eval 'erlang:display(erlang:system_info(otp_release)), halt().' -noshell
 echo "Elixir version:"
