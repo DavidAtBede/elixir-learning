@@ -3,7 +3,7 @@
 	"image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
 	"features": {
 	  "ghcr.io/devcontainers/features/elixir:1": {
-		"version": "latest"
+		"version": "1.18"
 	  },
 	  "ghcr.io/devcontainers/features/node:1": {
 		"version": "lts"
