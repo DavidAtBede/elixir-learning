@@ -1,0 +1,28 @@
+{
+	"name": "Elixir + Livebook",
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+	"features": {
+	  "ghcr.io/devcontainers/features/elixir:1": {
+		"version": "latest"
+	  },
+	  "ghcr.io/devcontainers/features/node:1": {
+		"version": "lts"
+	  }
+	},
+	"customizations": {
+	  "vscode": {
+		"extensions": [
+		  "jakebecker.elixir-ls",
+		  "ms-vscode.live-server"
+		]
+	  }
+	},
+	"postCreateCommand": "bash .devcontainer/post-create.sh",
+	"portsAttributes": {
+	  "8080": {
+		"label": "Livebook",
+		"onAutoForward": "openPreview"
+	  }
+	},
+	"forwardPorts": [8080]
+  }
