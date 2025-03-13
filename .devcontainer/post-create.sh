@@ -4,21 +4,26 @@ set -x  # Print commands for debugging
 
 # Update package list and install basic tools
 sudo apt-get update
-sudo apt-get install -y curl build-essential git wget unzip
+sudo apt-get install -y curl build-essential git wget unzip gnupg
 
-# Install Erlang from Ubuntu repositories
-echo "Installing Erlang from Ubuntu repos..."
-sudo apt-get install -y erlang
+# Add RabbitMQ Erlang PPA for OTP 27
+echo "Adding RabbitMQ Erlang PPA..."
+sudo add-apt-repository -y ppa:rabbitmq/rabbitmq-erlang
+sudo apt-get update
+
+# Install Erlang 27
+echo "Installing Erlang 27..."
+sudo apt-get install -y erlang-base erlang-nox erlang-dev
 # Verify Erlang
 if ! command -v erl >/dev/null; then
   echo "Erlang installation failed!"
   exit 1
 fi
 
-# Install Elixir manually
+# Install Elixir manually (compatible with OTP 27)
 echo "Installing Elixir..."
-ELIXIR_VERSION="1.15.7"
-wget -q https://github.com/elixir-lang/elixir/releases/download/v${ELIXIR_VERSION}/elixir-otp-25.zip -O /tmp/elixir.zip
+ELIXIR_VERSION="1.16.2"  # Latest as of early 2025, supports OTP 27
+wget -q https://github.com/elixir-lang/elixir/releases/download/v${ELIXIR_VERSION}/elixir-otp-27.zip -O /tmp/elixir.zip
 sudo unzip -q /tmp/elixir.zip -d /usr/local/elixir
 sudo ln -sf /usr/local/elixir/bin/elixirc /usr/local/bin/elixirc
 sudo ln -sf /usr/local/elixir/bin/elixir /usr/local/bin/elixir
