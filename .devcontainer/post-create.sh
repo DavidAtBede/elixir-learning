@@ -25,7 +25,7 @@ echo "Installed Erlang version: $ERL_VERSION"
 echo "Installing Elixir 1.18.2..."
 ELIXIR_VERSION="1.18.2"
 wget -v https://github.com/elixir-lang/elixir/releases/download/v${ELIXIR_VERSION}/elixir-otp-26.zip -O /tmp/elixir.zip || {
-  echo "Failed to download Elixir $ELIXIR_VERSION for OTP 26! Check URL or network."
+  echo "Failed to download Elixir $ELIXIR_VERSION for OTP 26!"
   exit 1
 }
 sudo unzip -q /tmp/elixir.zip -d /usr/local/elixir || {
@@ -56,9 +56,10 @@ echo "Installing Hex and Rebar..."
 mix local.hex --force
 mix local.rebar --force
 
-# Install Livebook
+# Install Livebook as an escript
 echo "Installing Livebook..."
-mix archive.install hex livebook --force
+mix escript.install hex livebook --force
+sudo ln -sf /home/vscode/.mix/escripts/livebook /usr/local/bin/livebook
 
 # Final verification
 echo "Verification:"
@@ -68,3 +69,5 @@ echo "Elixir version:"
 elixir --version
 echo "Node.js version:"
 node --version
+echo "Livebook version:"
+livebook --version
