@@ -4,7 +4,7 @@ set -x  # Print commands for debugging
 
 # Update package list and install basic tools
 sudo apt-get update
-sudo apt-get install -y curl build-essential git wget unzip gnupg software-properties-common
+sudo apt-get install -y curl build-essential git wget unzip gnupg software-properties-common inotify-tools
 
 # Add RabbitMQ Erlang PPA (OTP 26 by default)
 echo "Adding RabbitMQ Erlang PPA..."
