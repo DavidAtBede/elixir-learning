@@ -1,5 +1,13 @@
-/_build
-/cover
-/deps
+_build/
+cover/
+deps/
 erl_crash.dump
 *.ez
+*.beam
+
+# Mix lock file (optional, commit if you want reproducible builds)
+mix.lock
+
+# Editor/OS files
+.DS_Store
+*.swp
