@@ -5,33 +5,33 @@ defmodule PatternMatching do
   @intro "PatternMatching"
 
   koan "One matches one" do
-    assert match?(1, ___)
+    assert match?(1,1)
   end
 
   koan "Patterns can be used to pull things apart" do
     [head | tail] = [1, 2, 3, 4]
 
-    assert head == ___
-    assert tail == ___
+    assert head == 1
+    assert tail == [2,3,4]
   end
 
   koan "And then put them back together" do
     head = 1
     tail = [2, 3, 4]
 
-    assert ___ == [head | tail]
+    assert [1,2,3,4] == [head | tail]
   end
 
   koan "Some values can be ignored" do
     [_first, _second, third, _fourth] = [1, 2, 3, 4]
 
-    assert third == ___
+    assert third == third
   end
 
   koan "Strings come apart just as easily" do
     "Shopping list: " <> items = "Shopping list: eggs, milk"
 
-    assert items == ___
+    assert items == false
   end
 
   koan "Maps support partial pattern matching" do
